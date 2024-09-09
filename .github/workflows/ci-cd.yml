@@ -61,9 +61,27 @@ jobs:
         run: |
           aws eks update-kubeconfig --region us-east-1 --name eks-cluster-aws-fiap
           
+          # Cria o diretório k8s se não existir
           mkdir -p k8s
+          
+          # Define a URL do repositório ECR
           export ECR_REPOSITORY_URL="841162698708.dkr.ecr.us-east-1.amazonaws.com/ms-product:${GITHUB_SHA}"
+          
+          # Substitui variáveis no arquivo k8s-deployment.yaml
           envsubst < kubernetes/producao/k8s-deployment.yaml > k8s/k8s-deployment.yaml
+          
+          # Substitui variáveis no arquivo k8s-service.yaml
+          envsubst < kubernetes/producao/k8s-service.yaml > k8s/k8s-service.yaml
+          
+          # Substitui variáveis no arquivo k8s-ingress.yaml
+          envsubst < kubernetes/producao/k8s-ingress.yaml > k8s/k8s-ingress.yaml
+          
+          # Cria o arquivo kustomization.yaml
           echo "resources:" > k8s/kustomization.yaml
           echo "- k8s-deployment.yaml" >> k8s/kustomization.yaml
+          echo "- k8s-service.yaml" >> k8s/kustomization.yaml
+          echo "- k8s-ingress.yaml" >> k8s/kustomization.yaml
+          
+          # Aplica os arquivos YAML no cluster
           kubectl kustomize k8s | kubectl apply -f - --force
+     
