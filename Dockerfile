@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y maven
 RUN mvn clean package
 
 # Etapa de execução
-FROM openjdk:21-jre
+FROM openjdk:21
 
 WORKDIR /app
 
