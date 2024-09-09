@@ -1,13 +1,10 @@
 # Etapa de construção
-FROM openjdk:21 AS build
+FROM maven:3.9.3-openjdk-21 AS build
 
 WORKDIR /app
 
 # Copia os arquivos do projeto para o container
 COPY . .
-
-# Instala o Maven
-RUN apt-get update && apt-get install -y maven
 
 # Executa o build do projeto
 RUN mvn clean package
