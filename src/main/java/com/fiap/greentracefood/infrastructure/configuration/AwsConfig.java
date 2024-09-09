@@ -18,7 +18,7 @@ public class AwsConfig {
         return SqsAsyncClient.builder()
                 //.endpointOverride(URI.create("http://localhost:4566"))
                 .region(Region.of("us-east-1"))
-                .credentialsProvider(DefaultCredentialsProvider.create())
+                //.credentialsProvider(DefaultCredentialsProvider.create())
 
                 //.credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create("test", "test")))
                 .build();
