@@ -1,13 +1,23 @@
-# Estágio de build
+# Etapa de construção
 FROM openjdk:21 AS build
-WORKDIR /app
-COPY . .
-RUN sed -i 's/\r$//' mvnw && chmod +x mvnw
-RUN ./mvnw clean package
 
-# Estágio de execução
-FROM openjdk:21
 WORKDIR /app
+
+# Copia os arquivos do projeto para o container
+COPY . .
+
+# Instala o Maven
+RUN apt-get update && apt-get install -y maven
+
+# Executa o build do projeto
+RUN mvn clean package
+
+# Etapa de execução
+FROM openjdk:21-jre
+
+WORKDIR /app
+
+# Copia o JAR do container de build
 COPY --from=build /app/target/*.jar app.jar
-EXPOSE 8080
+
 ENTRYPOINT ["java", "-jar", "app.jar"]
