@@ -12,7 +12,9 @@ public class Pedido {
         this.codigo = codigo;
         this.status = status;
     }
-
+    // Construtor padrão público
+    public Pedido() {
+    }
     // Getters e Setters
     public String getCodigo() {
         return codigo;
