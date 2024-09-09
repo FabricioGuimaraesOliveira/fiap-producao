@@ -20,7 +20,7 @@ public class OrderListener {
     private final PedidoGateway pedidoGateway;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @SqsListener("{aws.sqs.queue.order}")
+    @SqsListener("${aws.sqs.queue.order}")
     public void receiveMessage(String message) {
         try {
             OrderDTO orderDTO = objectMapper.readValue(message, OrderDTO.class);
