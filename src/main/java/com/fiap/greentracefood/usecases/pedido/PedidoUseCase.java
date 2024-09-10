@@ -22,6 +22,7 @@ public class PedidoUseCase {
         Pedido pedido = pedidoGateway.detalharPorCodigo(codigo).orElseThrow();
         pedido.setStatus(status);
         pedidoGateway.salvar(pedido);
+        pedidoGateway.notificar(pedido);
 
     }
 

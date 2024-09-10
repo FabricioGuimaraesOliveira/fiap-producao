@@ -1,6 +1,7 @@
 package com.fiap.greentracefood.infrastructure.configuration;
 
 import com.fiap.greentracefood.domain.entity.pedido.gateway.PedidoGateway;
+import com.fiap.greentracefood.infrastructure.messaging.NotificationStatusPedido;
 import com.fiap.greentracefood.infrastructure.pedido.gateway.PedidoDatabaseRepository;
 import com.fiap.greentracefood.usecases.pedido.PedidoUseCase;
 import org.modelmapper.ModelMapper;
@@ -19,8 +20,8 @@ public class BeanConfiguration {
 
 
 	@Bean
-	public PedidoGateway createPedidoGateway(DynamoDbEnhancedClient enhancedClient, @Value("${dynamodb.tablename}") String tableName) {
-		return new PedidoDatabaseRepository(enhancedClient,tableName,modelMapper());
+	public PedidoGateway createPedidoGateway(DynamoDbEnhancedClient enhancedClient, @Value("${dynamodb.tablename}") String tableName, NotificationStatusPedido notificationStatusPedido) {
+		return new PedidoDatabaseRepository(enhancedClient,tableName,modelMapper(),notificationStatusPedido);
 	}
 
 
