@@ -2,6 +2,7 @@ package com.fiap.greentracefood.infrastructure.pedido.gateway;
 
 import com.fiap.greentracefood.domain.entity.pedido.gateway.PedidoGateway;
 import com.fiap.greentracefood.domain.entity.pedido.model.Pedido;
+import com.fiap.greentracefood.infrastructure.messaging.NotificationStatusPedido;
 import com.fiap.greentracefood.infrastructure.persistence.pedido.PedidoEntity;
 import org.modelmapper.ModelMapper;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
@@ -16,9 +17,11 @@ public class PedidoDatabaseRepository implements PedidoGateway {
     private final DynamoDbEnhancedClient enhancedClient;
     private final DynamoDbTable<PedidoEntity> table;
     private final ModelMapper modelMapper;
+    private  final NotificationStatusPedido notificationStatusPedido;
 
-    public PedidoDatabaseRepository(DynamoDbEnhancedClient enhancedClient, String tableName, ModelMapper modelMapper) {
+    public PedidoDatabaseRepository(DynamoDbEnhancedClient enhancedClient, String tableName, ModelMapper modelMapper, NotificationStatusPedido notificationStatusPedido) {
         this.enhancedClient = enhancedClient;
+        this.notificationStatusPedido = notificationStatusPedido;
         this.table = enhancedClient.table(tableName, TableSchema.fromBean(PedidoEntity.class));
         this.modelMapper = modelMapper;
     }
@@ -30,6 +33,10 @@ public class PedidoDatabaseRepository implements PedidoGateway {
         return modelMapper.map(pedidoEntity, Pedido.class);
     }
 
+    @Override
+    public void notificar(Pedido pedido) {
+        notificationStatusPedido.notificationStatusPedido(pedido);
+    }
 
 
     @Override

@@ -38,6 +38,8 @@ spec:
               value: "tf-order-table"
             - name: AWS_SQS_QUEUE_ORDER
               value: "https://sqs.us-east-1.amazonaws.com/841162698708/order-queue"
+            - name: AWS_SQS_QUEUE_NOTIFICATION
+              value: "https://sqs.us-east-1.amazonaws.com/841162698708/notification-queue"
           resources:
             requests:
               memory: "512Mi"

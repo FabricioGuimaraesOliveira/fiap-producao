@@ -10,6 +10,7 @@ public interface PedidoGateway {
 
     Optional<Pedido> detalharPorCodigo(String codigoPedido);
     Pedido salvar(Pedido pedido);
+    void notificar(Pedido pedido);
 
 
 

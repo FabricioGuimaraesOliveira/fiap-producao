@@ -31,6 +31,7 @@ public class OrderListener {
                 statusPedido = StatusPedido.RECEBIDO;
             } else {
                 statusPedido = StatusPedido.CANCELADO;
+                pedidoGateway.notificar(new Pedido(orderDTO.getId(), statusPedido));
             }
 
             Pedido pedido = new Pedido(orderDTO.getId(), statusPedido);
